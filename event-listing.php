@@ -37,6 +37,12 @@ define( 'EVENTLISTING_PLUGIN_URL',	plugin_dir_url( EVENTLISTING_PLUGIN_FILE ) );
 
 
 
+
+/*
+* 
+* Register custom post type and metabox
+* 
+*/
 function evntlst_register_posttype(){
     $labels = array(
         'name'                  => 'Events',
@@ -70,12 +76,9 @@ function evntlst_register_posttype(){
     register_post_type( $id, $args );
 }
 
-
-
 function evntlst_metabox_show($post){
     include( 'views/metabox.php' );
 }
-
 
 function evntlst_metabox($post_id){
     add_meta_box(
@@ -86,7 +89,6 @@ function evntlst_metabox($post_id){
 
     );  
 }
-
 
 function evntlst_verify_nonce()
 {
@@ -114,8 +116,6 @@ function evntlst_save_metabox($post_id){
     }
 }
 
-
-
 add_action( 'init', 'evntlst_register_posttype' );
 add_action( 'add_meta_boxes',  'evntlst_metabox' );
 add_action( 'save_post', 'evntlst_save_metabox' , 10 , 3 );
@@ -123,6 +123,14 @@ add_action( 'save_post', 'evntlst_save_metabox' , 10 , 3 );
 
 
 
+
+
+
+/*
+* 
+* Display custom values on the table
+* 
+*/
 
 function evntlst_set_custom_columns($columns)
 {
@@ -157,4 +165,42 @@ function evntlst_custom_event_column($column, $post_id ){
 add_filter( 'manage_'.EVENTLISTING_ID.'_posts_columns', 'evntlst_set_custom_columns' );
 add_action( 'manage_'.EVENTLISTING_ID.'_posts_custom_column' , 'evntlst_custom_event_column', 10, 2 );
 
+
+
+
+
+
+
+
+
+
+/*
+* 
+* Display custom values on the table
+* 
+*/
+
+add_filter('posts_join', 'evntlst_table_join' );
+function evntlst_table_join($wp_join)
+{
+    if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && $_GET['post_type'] == EVENTLISTING_ID)) {
+        global $wpdb;
+        $wp_join .= " LEFT JOIN (
+                SELECT post_id, meta_value as eventdate
+                FROM $wpdb->postmeta
+                WHERE meta_key =  'date' ) AS DD
+                ON $wpdb->posts.ID = DD.post_id ";
+    }
+    return ($wp_join);
+}
+
+
+add_filter('posts_orderby', 'evntlst_table_order' );
+function evntlst_table_order( $orderby )
+{
+    if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && $_GET['post_type'] == EVENTLISTING_ID)) {
+            $orderby = " STR_TO_DATE(DD.eventdate,'%m/%d/%Y') DESC ";
+    }
+    return $orderby;
+}
 
