@@ -46,37 +46,33 @@ get_header();
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkmFAzmTPiOnVTRmfkaQACABtYcFCcjrI"></script>
-<script type="text/javascript" src="https://rawgit.com/Logicify/jquery-locationpicker-plugin/master/dist/locationpicker.jquery.js"></script>
+        <script type="text/javascript" src="https://rawgit.com/Logicify/jquery-locationpicker-plugin/master/dist/locationpicker.jquery.js"></script>
 
 
 
-<script type="text/javascript">
-    $(function() {
- 
-$('#us2').locationpicker({
-   location: {latitude:  <?php echo $lat?>, longitude: <?php echo $lng?>},   
-   radius: 0,
-   inputBinding: {
-      latitudeInput: $('#lat'),
-      longitudeInput: $('#lng'),
-      locationNameInput: $('#location')
-   },
-   enableAutocomplete: true,
-   onchanged: function(currentLocation, radius, isMarkerDropped) {
-        document.getElementById('location').value = currentLocation.latitude+'|'+currentLocation.longitude
-    }
-});
- 
- 
-});
+        <script type="text/javascript">
+            $(function() {
+         
+                $('#us2').locationpicker({
+                   location: {latitude:  <?php echo $lat?>, longitude: <?php echo $lng?>},   
+                   radius: 0,
+                   inputBinding: {
+                      latitudeInput: $('#lat'),
+                      longitudeInput: $('#lng'),
+                      locationNameInput: $('#location')
+                   },
+                   enableAutocomplete: true,
+                   onchanged: function(currentLocation, radius, isMarkerDropped) {
+                        document.getElementById('location').value = currentLocation.latitude+'|'+currentLocation.longitude
+                    }
+                });
+            });
+        </script>
 
-</script>
-
-<div id="us2" style="height: 400px;"></div> 
+        <div id="us2" style="height: 400px;"></div> 
     <?php
         }
-    }
-
+    } 
     ?>
 </main>
 
