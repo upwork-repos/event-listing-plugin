@@ -4,10 +4,11 @@
 $date_value = get_post_meta( $post->ID, 'date', true );
 $url_value = get_post_meta( $post->ID, 'url', true );
 $location_value = get_post_meta( $post->ID, 'location', true );
+$location_name = get_post_meta( $post->ID, 'location_name', true );
 $lat = 46.15242437752303;
 $lng = 2.7470703125;
-if($location_value){
-	$location_value = explode('|', $location_value);
+$location_value = explode('|', $location_value);
+if( sizeof($location_value) == 2 ){
 	$lat = $location_value[0];
 	$lng = $location_value[1];
 }
@@ -32,6 +33,7 @@ wp_nonce_field(EVENTLISTING.'_nonce_action', EVENTLISTING.'_nonce');
     	<label for="location" class="">Location  </label>
     </th>
     <td>
+    	<input type="text" id="location_name" name="location_name" class="regular-text ltr" placeholder="Name of the location" value="<?=esc_attr__( $location_name )?>">
     	<input type="hidden" id="location" name="location" >
     	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkmFAzmTPiOnVTRmfkaQACABtYcFCcjrI"></script>
@@ -61,10 +63,6 @@ $('#us2').locationpicker({
 
 </script>
 
-
- Location: <input type="text" id="location" style="width: 200px"/>
-Lat <input type="text" id="lat" style="width: 200px"/>
-Long: <input type="text" id="lng" style="width: 200px"/>
 <div id="us2" style="height: 400px;"></div> 
 
 

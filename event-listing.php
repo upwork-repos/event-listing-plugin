@@ -105,7 +105,7 @@ function evntlst_save_metabox($post_id){
     if(!evntlst_verify_nonce()) 
         return;
     $fields = [
-        'url', 'location', 'date'
+        'url', 'location', 'date', 'location_name'
     ];
 
 
@@ -144,18 +144,26 @@ function evntlst_set_custom_columns($columns)
 }
 
 function evntlst_custom_event_column($column, $post_id ){
+    $location = get_post_meta( $post_id, 'location_name', true );
+    $date = get_post_meta( $post_id, 'date', true );
+    $timestamp = strtotime($date);
+    $excerpt = get_the_excerpt($post_id);
+    $title = get_the_title($post_id);
+
+
     switch ( $column ) {
 
         case 'location' :
-            echo get_post_meta( $post_id, 'location', true );
+            echo $location;
             break;
 
         case 'event_date' :
-            echo get_post_meta( $post_id, 'date', true );
+            echo $date;
             break;
         case 'link' :
             $url = get_post_meta( $post_id, 'url', true );
-            echo "<a href='$url' title='Go to the external site' target='_blank'>Go to the external site</a>";
+            echo "<a class='button action' href='$url' title='Go to the external site' target='_blank'>Go to the event site</a> <br>
+                  <a class='button action' href='https://www.google.com/calendar/render?action=TEMPLATE&text=$title&details=$excerpt&location=$location&dates=$timestamp%2F$date'  target='_blank' >Add to Google Calendar</a>";
             break;
 
     }
@@ -183,7 +191,7 @@ add_action( 'manage_'.EVENTLISTING_ID.'_posts_custom_column' , 'evntlst_custom_e
 add_filter('posts_join', 'evntlst_table_join' );
 function evntlst_table_join($wp_join)
 {
-    if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && $_GET['post_type'] == EVENTLISTING_ID)) {
+    if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && isset($_GET['post_type']) && $_GET['post_type'] == EVENTLISTING_ID)) {
         global $wpdb;
         $wp_join .= " LEFT JOIN (
                 SELECT post_id, meta_value as eventdate
@@ -198,7 +206,7 @@ function evntlst_table_join($wp_join)
 add_filter('posts_orderby', 'evntlst_table_order' );
 function evntlst_table_order( $orderby )
 {
-    if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && $_GET['post_type'] == EVENTLISTING_ID)) {
+    if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && isset($_GET['post_type']) && $_GET['post_type'] == EVENTLISTING_ID)) {
             $orderby = " STR_TO_DATE(DD.eventdate,'%m/%d/%Y') DESC ";
     }
     return $orderby;
