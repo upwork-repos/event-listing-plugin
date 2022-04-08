@@ -37,7 +37,8 @@ define( 'EVENTLISTING_VERSION',		'1.0.1' );
 function evntlst_register_posttype(){
     $labels = array(
         'name'                  => 'Events',
-        'singular_name'         => 'Event'
+        'singular_name'         => 'Event',
+        'add_new_item'          => 'Add new Event',
     );
     $supports = ['title', 'thumbnail','editor', 'excerpt'];
     $name = 'Events';
