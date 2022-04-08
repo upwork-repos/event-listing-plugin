@@ -30,7 +30,7 @@ get_header();
         $url = get_post_meta( $post->ID, 'url', true );
         $location_value = get_post_meta( $post->ID, 'location', true );
         $location = get_post_meta( $post->ID, 'location_name', true );
-        $timestamp = strtotime($date_value);
+        $timestamp = str_replace("-", "", $date_value)."T210000Z";
         $lat = 46.15242437752303;
         $lng = 2.7470703125;
         $location_value = explode('|', $location_value);
@@ -38,7 +38,7 @@ get_header();
             $lat = $location_value[0];
             $lng = $location_value[1];
         }
-        echo "<a class='button' href='https://www.google.com/calendar/render?action=TEMPLATE&text=$title&details=$excerpt&location=$location&dates=$timestamp%2F$date'  target='_blank' >Add to Google Calendar</a> &nbsp; <a class='button' href='$url' title='Go to the external site' target='_blank'>Go to the event site</a>";
+        echo "<a class='button' href='https://www.google.com/calendar/render?action=TEMPLATE&text=$title&details=$excerpt&location=$location&dates=$timestamp%2F$timestamp'  target='_blank' >Add to Google Calendar</a> &nbsp; <a class='button' href='$url' title='Go to the external site' target='_blank'>Go to the event site</a>";
 
         ?>
 

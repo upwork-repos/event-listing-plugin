@@ -137,7 +137,6 @@ function evntlst_set_custom_columns($columns)
     $columns['title'] = __( 'Title', 'your_text_domain' );
     $columns['location'] = __( 'Location', 'your_text_domain' );
     $columns['event_date'] = __( 'Event Date', 'your_text_domain' );
-    $columns['link'] = __( 'Link', 'your_text_domain' );
 
     return $columns;
 }
@@ -157,11 +156,6 @@ function evntlst_custom_event_column($column, $post_id ){
             break;
         case 'event_date' :
             echo $date;
-            break;
-        case 'link' :
-            $url = get_post_meta( $post_id, 'url', true );
-            echo "<a class='button action' href='$url' title='Go to the external site' target='_blank'>Go to the event site</a> <br>
-                  <a class='button action' href='https://www.google.com/calendar/render?action=TEMPLATE&text=$title&details=$excerpt&location=$location&dates=$timestamp%2F$date'  target='_blank' >Add to Google Calendar</a>";
             break;
 
     }
