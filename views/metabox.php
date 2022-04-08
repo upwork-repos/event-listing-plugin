@@ -24,7 +24,7 @@ wp_nonce_field(EVENTLISTING.'_nonce_action', EVENTLISTING.'_nonce');
     	<label for="url" class="">URL</label>
     </th>
     <td>
-    	<input type="text" id="url" name="url" class="regular-text ltr" placeholder="" value="<?=esc_attr__( $url_value )?>">
+    	<input type="text" id="url" name="url" class="regular-text ltr" placeholder="" value="<?php echo esc_attr__( $url_value )?>">
     </td>
   </tr>
 
@@ -33,7 +33,7 @@ wp_nonce_field(EVENTLISTING.'_nonce_action', EVENTLISTING.'_nonce');
     	<label for="location" class="">Location  </label>
     </th>
     <td>
-    	<input type="text" id="location_name" name="location_name" class="regular-text ltr" placeholder="Name of the location" value="<?=esc_attr__( $location_name )?>">
+    	<input type="text" id="location_name" name="location_name" class="regular-text ltr" placeholder="Name of the location" value="<?php echo esc_attr__( $location_name )?>">
     	<input type="hidden" id="location" name="location" >
     	<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBkmFAzmTPiOnVTRmfkaQACABtYcFCcjrI"></script>
@@ -45,7 +45,7 @@ wp_nonce_field(EVENTLISTING.'_nonce_action', EVENTLISTING.'_nonce');
 	$(function() {
  
 $('#us2').locationpicker({
-   location: {latitude:  <?=$lat?>, longitude: <?=$lat?>},   
+   location: {latitude:  <?php echo $lat?>, longitude: <?php echo $lat?>},   
    radius: 0,
    inputBinding: {
       latitudeInput: $('#lat'),
@@ -77,7 +77,7 @@ $('#us2').locationpicker({
     	<label for="date" class="">Date</label>
     </th>
     <td>
-    	<input type="date" id="date" name="date" class="regular-text ltr" placeholder="" value="<?=esc_attr__( $date_value )?>">
+    	<input type="date" id="date" name="date" class="regular-text ltr" placeholder="" value="<?php echo esc_attr__( $date_value )?>">
     </td>
   </tr>
 

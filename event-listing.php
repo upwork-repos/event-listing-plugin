@@ -77,7 +77,6 @@ function evntlst_metabox($post_id){
         'Additional Fields', 
         'evntlst_metabox_show',
         EVENTLISTING_ID,
-
     );  
 }
 
@@ -147,7 +146,6 @@ function evntlst_custom_event_column($column, $post_id ){
         case 'location' :
             echo $location;
             break;
-
         case 'event_date' :
             echo $date;
             break;
@@ -163,12 +161,6 @@ function evntlst_custom_event_column($column, $post_id ){
 
 add_filter( 'manage_'.EVENTLISTING_ID.'_posts_columns', 'evntlst_set_custom_columns' );
 add_action( 'manage_'.EVENTLISTING_ID.'_posts_custom_column' , 'evntlst_custom_event_column', 10, 2 );
-
-
-
-
-
-
 
 
 
