@@ -20,6 +20,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 define( 'EVENTLISTING',            'EVENTLISTING' );
+define( 'EVENTLISTING_ID',            'kbr_event' );
 define( 'EVENTLISTING_NAME',			'Event Listing Plugin' );
 // Plugin version
 define( 'EVENTLISTING_VERSION',		'1.0.1' );
@@ -45,7 +46,7 @@ function evntlst_register_posttype(){
     $name = 'Events';
     $singular_name = 'Event';
     $taxonomies = [];
-    $id = "kbr_event";
+    $id = EVENTLISTING_ID;
     $args = array(
         'label'                 => $singular_name,
         'description'           => $name,
@@ -81,7 +82,7 @@ function evntlst_metabox($post_id){
         'additional_fields',
         'Additional Fields', 
         'evntlst_metabox_show',
-        'kbr_event',
+        EVENTLISTING_ID,
 
     );  
 }
@@ -118,3 +119,42 @@ function evntlst_save_metabox($post_id){
 add_action( 'init', 'evntlst_register_posttype' );
 add_action( 'add_meta_boxes',  'evntlst_metabox' );
 add_action( 'save_post', 'evntlst_save_metabox' , 10 , 3 );
+
+
+
+
+
+function evntlst_set_custom_columns($columns)
+{
+    unset( $columns['author'] );
+    $columns['title'] = __( 'Title', 'your_text_domain' );
+    $columns['location'] = __( 'Location', 'your_text_domain' );
+    $columns['event_date'] = __( 'Event Date', 'your_text_domain' );
+    $columns['link'] = __( 'Link', 'your_text_domain' );
+
+    return $columns;
+}
+
+function evntlst_custom_event_column($column, $post_id ){
+    switch ( $column ) {
+
+        case 'location' :
+            echo get_post_meta( $post_id, 'location', true );
+            break;
+
+        case 'event_date' :
+            echo get_post_meta( $post_id, 'date', true );
+            break;
+        case 'link' :
+            $url = get_post_meta( $post_id, 'url', true );
+            echo "<a href='$url' title='Go to the external site' target='_blank'>Go to the external site</a>";
+            break;
+
+    }
+}
+
+
+add_filter( 'manage_'.EVENTLISTING_ID.'_posts_columns', 'evntlst_set_custom_columns' );
+add_action( 'manage_'.EVENTLISTING_ID.'_posts_custom_column' , 'evntlst_custom_event_column', 10, 2 );
+
+
