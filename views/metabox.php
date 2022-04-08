@@ -45,7 +45,7 @@ wp_nonce_field(EVENTLISTING.'_nonce_action', EVENTLISTING.'_nonce');
 	$(function() {
  
 $('#us2').locationpicker({
-   location: {latitude:  <?php echo $lat?>, longitude: <?php echo $lat?>},   
+   location: {latitude:  <?php echo $lat?>, longitude: <?php echo $lng?>},   
    radius: 0,
    inputBinding: {
       latitudeInput: $('#lat'),

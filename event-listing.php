@@ -24,6 +24,14 @@ define( 'EVENTLISTING_ID',            'kbr_event' );
 define( 'EVENTLISTING_NAME',			'Event Listing Plugin' );
 define( 'EVENTLISTING_VERSION',		'1.0.1' );
 
+// Plugin Root File
+define( 'EVENTLISTING_PLUGIN_FILE',   __FILE__ );
+// Plugin base
+define( 'EVENTLISTING_PLUGIN_BASE',   plugin_basename( EVENTLISTING_PLUGIN_FILE ) );
+// Plugin Folder Path
+define( 'EVENTLISTING_PLUGIN_DIR',    plugin_dir_path( EVENTLISTING_PLUGIN_FILE ) );
+// Plugin Folder URL
+define( 'EVENTLISTING_PLUGIN_URL',    plugin_dir_url( EVENTLISTING_PLUGIN_FILE ) );
 
 
 
@@ -195,3 +203,27 @@ function evntlst_table_order( $orderby )
     return $orderby;
 }
 
+
+
+
+
+
+
+
+
+function evntlst_single_template($single)
+{
+    global $post;
+
+    if ( $post->post_type == EVENTLISTING_ID ) {
+        if ( file_exists( EVENTLISTING_PLUGIN_DIR . '/views/single.php' ) ) {
+            return EVENTLISTING_PLUGIN_DIR . '/views/single.php';
+        }
+    }
+
+    return $single;
+}
+
+
+
+add_filter('single_template', 'evntlst_single_template');
