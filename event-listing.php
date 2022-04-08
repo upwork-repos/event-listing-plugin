@@ -24,14 +24,6 @@ define( 'EVENTLISTING_ID',            'kbr_event' );
 define( 'EVENTLISTING_NAME',			'Event Listing Plugin' );
 // Plugin version
 define( 'EVENTLISTING_VERSION',		'1.0.1' );
-// Plugin Root File
-define( 'EVENTLISTING_PLUGIN_FILE',	__FILE__ );
-// Plugin base
-define( 'EVENTLISTING_PLUGIN_BASE',	plugin_basename( EVENTLISTING_PLUGIN_FILE ) );
-// Plugin Folder Path
-define( 'EVENTLISTING_PLUGIN_DIR',	plugin_dir_path( EVENTLISTING_PLUGIN_FILE ) );
-// Plugin Folder URL
-define( 'EVENTLISTING_PLUGIN_URL',	plugin_dir_url( EVENTLISTING_PLUGIN_FILE ) );
 
 
 
