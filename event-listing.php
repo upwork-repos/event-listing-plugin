@@ -22,7 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 define( 'EVENTLISTING',            'EVENTLISTING' );
 define( 'EVENTLISTING_ID',            'kbr_event' );
 define( 'EVENTLISTING_NAME',			'Event Listing Plugin' );
-// Plugin version
 define( 'EVENTLISTING_VERSION',		'1.0.1' );
 
 
@@ -173,7 +172,6 @@ add_action( 'manage_'.EVENTLISTING_ID.'_posts_custom_column' , 'evntlst_custom_e
 
 
 
-
 /*
 * 
 * Display custom values on the table
@@ -186,7 +184,7 @@ function evntlst_table_join($wp_join)
     if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && isset($_GET['post_type']) && $_GET['post_type'] == EVENTLISTING_ID)) {
         global $wpdb;
         $wp_join .= " LEFT JOIN (
-                SELECT post_id, meta_value as eventdate
+                SELECT post_id, meta_value as event_date
                 FROM $wpdb->postmeta
                 WHERE meta_key =  'date' ) AS DD
                 ON $wpdb->posts.ID = DD.post_id ";
@@ -199,7 +197,7 @@ add_filter('posts_orderby', 'evntlst_table_order' );
 function evntlst_table_order( $orderby )
 {
     if(is_post_type_archive(EVENTLISTING_ID) || (is_admin() && isset($_GET['post_type']) && $_GET['post_type'] == EVENTLISTING_ID)) {
-            $orderby = " STR_TO_DATE(DD.eventdate,'%m/%d/%Y') DESC ";
+            $orderby = 'event_date DESC';
     }
     return $orderby;
 }
